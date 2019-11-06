@@ -1,7 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using DbUp;
+using Microsoft.Extensions.Configuration;
 
 namespace todoMigrations
 {
@@ -11,9 +13,15 @@ namespace todoMigrations
         {
             int output = 0;
 
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            IConfigurationRoot configuration = builder.Build();
+
             var connectionString =
                 args.FirstOrDefault()
-                ?? "Server=127.0.0.1;Database=todo;User=sa;Password=letmein123;";
+                ?? configuration.GetConnectionString("Database");
 
             EnsureDatabase.For.SqlDatabase(connectionString);
 
@@ -37,10 +45,10 @@ namespace todoMigrations
                 Console.ReadLine();
 #endif
             }
-            else 
+            else
             {
                 output = 0;
-                
+
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Success!");
                 Console.ResetColor();
