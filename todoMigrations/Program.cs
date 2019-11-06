@@ -13,7 +13,7 @@ namespace todoMigrations
 
             var connectionString =
                 args.FirstOrDefault()
-                ?? "Server=127.0.0.1;Database=todo;User=sa;Password=Retnuh1601;";
+                ?? "Server=127.0.0.1;Database=todo;User=sa;Password=letmein123;";
 
             EnsureDatabase.For.SqlDatabase(connectionString);
 
