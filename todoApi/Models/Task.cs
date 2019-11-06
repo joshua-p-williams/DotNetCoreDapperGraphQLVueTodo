@@ -2,7 +2,7 @@ using System;
 
 namespace todoApi.Models
 {
-    public class Todo
+    public class Task
     {
         public int id { get; set; }
 
