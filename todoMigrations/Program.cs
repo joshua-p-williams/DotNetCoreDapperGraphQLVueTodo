@@ -21,7 +21,7 @@ namespace todoMigrations
 
             var connectionString =
                 args.FirstOrDefault()
-                ?? configuration.GetConnectionString("Database");
+                ?? configuration.GetConnectionString("DefaultConnection");
 
             EnsureDatabase.For.SqlDatabase(connectionString);
 

@@ -4,9 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using todoApi.Models;
-using System.Data.SqlClient;
-using Dapper;
+using Microsoft.Extensions.Configuration;
+using todoApi.Repositories;
 
 namespace todoApi.Controllers
 {
@@ -15,19 +14,18 @@ namespace todoApi.Controllers
     public class TaskController : ControllerBase
     {
         private readonly ILogger<TaskController> _logger;
+        private readonly ITaskRepository _taskRepository;
 
-        public TaskController(ILogger<TaskController> logger)
+        public TaskController(ILogger<TaskController> logger, ITaskRepository taskRepository)
         {
             _logger = logger;
+            _taskRepository = taskRepository;
         }
 
         [HttpGet]
         public IEnumerable<todoApi.Models.Task> Get()
         {
-            using (var connection = new SqlConnection("Server=127.0.0.1;Database=todo;User=sa;Password=letmein123;"))
-            {
-                return connection.Query<todoApi.Models.Task>("select * from todo.dbo.tasks").ToList();                
-            }
+            return _taskRepository.Get().ToList();
         }
     }
 }
