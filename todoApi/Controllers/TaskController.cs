@@ -11,21 +11,10 @@ namespace todoApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TaskController : ControllerBase
+    public class TaskController : ResourceControllerBase<TaskController, todoApi.Models.Task, TaskRepository>
     {
-        private readonly ILogger<TaskController> _logger;
-        private readonly TaskRepository _taskRepository;
-
-        public TaskController(ILogger<TaskController> logger, TaskRepository taskRepository)
+        public TaskController(ILogger<TaskController> logger, TaskRepository taskRepository) : base(logger, taskRepository)
         {
-            _logger = logger;
-            _taskRepository = taskRepository;
-        }
-
-        [HttpGet]
-        public IEnumerable<todoApi.Models.Task> Get()
-        {
-            return _taskRepository.FindAll().ToList();
         }
     }
 }

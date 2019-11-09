@@ -10,10 +10,12 @@ namespace todoApi.Repositories
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
         protected readonly IConfiguration _config;
+        protected String _connectionName;
 
-        public RepositoryBase(IConfiguration config)
+        public RepositoryBase(IConfiguration config, String connectionName)
         {
             this._config = config;
+            this._connectionName = connectionName;
         }
 
         public abstract IEnumerable<T> FindAll();
@@ -22,7 +24,7 @@ namespace todoApi.Repositories
         {
             IEnumerable<T> results = null;
 
-            using (var connection = new SqlConnection(_config.GetValue<String>("ConnectionStrings:DefaultConnection")))
+            using (var connection = new SqlConnection(_config.GetValue<String>($"ConnectionStrings:{_connectionName}")))
             {
                 results = connection.Query<T>(query);
             }

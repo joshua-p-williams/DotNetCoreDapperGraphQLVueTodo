@@ -7,7 +7,7 @@ namespace todoApi.Repositories
 {
     public class TaskRepository : RepositoryBase<todoApi.Models.Task>
     {
-        public TaskRepository(IConfiguration config) : base(config)
+        public TaskRepository(IConfiguration config) : base(config, "DefaultConnection")
         {
         }
 
