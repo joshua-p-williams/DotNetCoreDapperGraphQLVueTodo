@@ -4,10 +4,10 @@ namespace todoApi.Models
 {
     public class Task
     {
-        public int id { get; set; }
+        public int Id { get; set; }
 
-        public String item { get; set; }
+        public String Item { get; set; }
 
-        public Boolean completed { get; set; }
+        public Boolean Completed { get; set; }
     }
 }

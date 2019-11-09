@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using todoApi.Repositories.Base;
@@ -12,9 +13,29 @@ namespace todoApi.Repositories
         {
         }
 
-        public override IEnumerable<todoApi.Models.Task> FindAll()
+        public override todoApi.Models.Task GetById(int id)
+        {
+            return Get("Select top 1 * from dbo.tasks").First();
+        }
+
+        public override IEnumerable<todoApi.Models.Task> FetchAll()
         {
             return Get("select * from dbo.tasks");
+        }
+
+        public override todoApi.Models.Task Create(todoApi.Models.Task item) 
+        {
+            return null;
+        }
+
+        public override todoApi.Models.Task Update(todoApi.Models.Task existingItem, todoApi.Models.Task newItem) 
+        {
+            return null;
+        }
+
+        public override Boolean Delete(todoApi.Models.Task item) 
+        {
+            return false;
         }
     }
 }

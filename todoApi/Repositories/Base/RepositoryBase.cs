@@ -18,7 +18,11 @@ namespace todoApi.Repositories.Base
             this._connectionName = connectionName;
         }
 
-        public abstract IEnumerable<T> FindAll();
+        public abstract T GetById(int id);
+        public abstract IEnumerable<T> FetchAll();
+        public abstract T Create(T item);
+        public abstract T Update(T existingItem, T newItem);
+        public abstract Boolean Delete(T item);
 
         public IEnumerable<T> Get(String query)
         {

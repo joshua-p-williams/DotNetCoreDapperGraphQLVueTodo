@@ -5,6 +5,10 @@ namespace todoApi.Contracts
 {
     public interface IRepositoryBase<T>
     {
-        IEnumerable<T> FindAll();
+        T GetById(int id);
+        IEnumerable<T> FetchAll();
+        T Create(T item);
+        T Update(T existingItem, T newItem);
+        Boolean Delete(T item);
     }
 }

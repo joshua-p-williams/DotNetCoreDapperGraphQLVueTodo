@@ -28,7 +28,7 @@ namespace todoApi.Controllers.Base
         [HttpGet]
         public virtual IEnumerable<TModel> Get()
         {
-            return _repository.FindAll().ToList();
+            return _repository.FetchAll().ToList();
         }
     }
 }
