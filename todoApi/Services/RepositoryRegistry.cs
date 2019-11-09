@@ -1,7 +1,6 @@
 using System;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using todoApi.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace todoApi.Services
 {
@@ -9,7 +8,7 @@ namespace todoApi.Services
     {
         public static void Register(IServiceCollection services)
         {
-            services.AddSingleton(typeof(ITaskRepository), typeof(TaskRepository));
+            services.AddSingleton(typeof(TaskRepository), typeof(TaskRepository));
         }
     }
 }

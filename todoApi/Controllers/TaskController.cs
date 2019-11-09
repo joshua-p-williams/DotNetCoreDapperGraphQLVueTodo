@@ -14,9 +14,9 @@ namespace todoApi.Controllers
     public class TaskController : ControllerBase
     {
         private readonly ILogger<TaskController> _logger;
-        private readonly ITaskRepository _taskRepository;
+        private readonly TaskRepository _taskRepository;
 
-        public TaskController(ILogger<TaskController> logger, ITaskRepository taskRepository)
+        public TaskController(ILogger<TaskController> logger, TaskRepository taskRepository)
         {
             _logger = logger;
             _taskRepository = taskRepository;
@@ -25,7 +25,7 @@ namespace todoApi.Controllers
         [HttpGet]
         public IEnumerable<todoApi.Models.Task> Get()
         {
-            return _taskRepository.Get().ToList();
+            return _taskRepository.FindAll().ToList();
         }
     }
 }

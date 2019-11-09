@@ -1,35 +1,19 @@
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using Dapper;
 using Microsoft.Extensions.Configuration;
+using todoApi.Repositories;
 
 namespace todoApi.Repositories
 {
-    public interface ITaskRepository
+    public class TaskRepository : RepositoryBase<todoApi.Models.Task>
     {
-        IEnumerable<todoApi.Models.Task> Get();
-    }
-
-    public class TaskRepository : ITaskRepository
-    {
-        private readonly IConfiguration _config;
-
-        public TaskRepository(IConfiguration config)
+        public TaskRepository(IConfiguration config) : base(config)
         {
-            this._config = config;
         }
 
-        public IEnumerable<todoApi.Models.Task> Get()
+        public override IEnumerable<todoApi.Models.Task> FindAll()
         {
-            IEnumerable<todoApi.Models.Task> task = null;
-
-            using (var connection = new SqlConnection(_config.GetValue<String>("ConnectionStrings:DefaultConnection")))
-            {
-                task = connection.Query<todoApi.Models.Task>("select * from todo.dbo.tasks");
-            }
-
-            return task;
+            return Get("select * from todo.dbo.tasks");
         }
     }
 }
