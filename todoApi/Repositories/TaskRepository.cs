@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
+using todoApi.Repositories.Base;
 using todoApi.Repositories;
 
 namespace todoApi.Repositories

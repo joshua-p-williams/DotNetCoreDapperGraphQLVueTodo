@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using todoApi.Contracts;
 
-namespace todoApi.Controllers
+namespace todoApi.Controllers.Base
 {
     [ApiController]
     [Route("[controller]")]

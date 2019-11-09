@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using Dapper;
 
-namespace todoApi.Repositories
+namespace todoApi.Repositories.Base
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
