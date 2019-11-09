@@ -14,7 +14,7 @@ namespace todoApi.Repositories
 
         public override IEnumerable<todoApi.Models.Task> FindAll()
         {
-            return Get("select * from todo.dbo.tasks");
+            return Get("select * from dbo.tasks");
         }
     }
 }
