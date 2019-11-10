@@ -13,15 +13,15 @@ namespace todoApi.GraphQL.GraphQLQueries
 {
     public class AppQuery : ObjectGraphType
     {
-        public AppQuery(TaskRepository repository)
+        public AppQuery(TodoRepository repository)
         {
-            Field<ListGraphType<TaskType>>(
-               "tasks",
+            Field<ListGraphType<TodoType>>(
+               "todos",
                resolve: context => repository.FetchAll()
             );
 
-            Field<TaskType>(
-                "task",
+            Field<TodoType>(
+                "todo",
                 arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" }),
                 resolve: context =>
                 {

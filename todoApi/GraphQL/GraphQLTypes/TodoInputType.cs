@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace todoApi.GraphQL.GraphQLTypes
 {
-    public class TaskInputType : InputObjectGraphType
+    public class TodoInputType : InputObjectGraphType
     {
-        public TaskInputType()
+        public TodoInputType()
         {
-            Name = "taskInput";
-            Field<NonNullGraphType<StringGraphType>>("item");
+            Name = "todoInput";
+            Field<NonNullGraphType<StringGraphType>>("destails");
             Field<NonNullGraphType<BooleanGraphType>>("completed");
         }
     }

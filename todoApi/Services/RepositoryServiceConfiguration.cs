@@ -8,7 +8,7 @@ namespace todoApi.Services
     {
         public static void AddRepositories(this IServiceCollection services)
         {
-            services.AddSingleton<TaskRepository>();
+            services.AddSingleton<TodoRepository>();
         }
     }
 }

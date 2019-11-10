@@ -13,54 +13,54 @@ namespace todoApi.GraphQL.GraphQLQueries
 {
     public class AppMutation : ObjectGraphType
     {
-        public AppMutation(TaskRepository repository)
+        public AppMutation(TodoRepository repository)
         {
-            Field<TaskType>(
-                "createTask",
-                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<TaskInputType>> { Name = "task" }),
+            Field<TodoType>(
+                "createTodo",
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<TodoInputType>> { Name = "todo" }),
                 resolve: context =>
                 {
-                    var task = context.GetArgument<todoApi.Models.Task>("task");
-                    return repository.Create(task);
+                    var todo = context.GetArgument<Todo>("todo");
+                    return repository.Create(todo);
                 }
             );
 
-            Field<TaskType>(
-                "updateTask",
+            Field<TodoType>(
+                "updateTodo",
                 arguments: new QueryArguments(
-                    new QueryArgument<NonNullGraphType<TaskInputType>> { Name = "task" }, 
-                    new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "taskId" }),
+                    new QueryArgument<NonNullGraphType<TodoInputType>> { Name = "todo" }, 
+                    new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" }),
                 resolve: context =>
                 {
-                    var newTask = context.GetArgument<todoApi.Models.Task>("task");
-                    var taskId = context.GetArgument<int>("taskId");
+                    var newItem = context.GetArgument<Todo>("todo");
+                    var id = context.GetArgument<int>("id");
 
-                    var existingTask = repository.GetById(taskId);
-                    if (existingTask == null)
+                    var existingItem = repository.GetById(id);
+                    if (existingItem == null)
                     {
-                        context.Errors.Add(new ExecutionError("Couldn't find task in db."));
+                        context.Errors.Add(new ExecutionError("Couldn't find todo in db."));
                         return null;
                     }
 
-                    return repository.Update(existingTask, newTask);
+                    return repository.Update(existingItem, newItem);
                 }
             );
 
             Field<StringGraphType>(
-                "deleteTask",
-                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "taskId" }),
+                "deleteTodo",
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" }),
                 resolve: context =>
                 {
-                    var taskId = context.GetArgument<int>("taskId");
-                    var task = repository.GetById(taskId);
-                    if (task == null)
+                    var id = context.GetArgument<int>("id");
+                    var todo = repository.GetById(id);
+                    if (todo == null)
                     {
-                        context.Errors.Add(new ExecutionError("Couldn't find task in db."));
+                        context.Errors.Add(new ExecutionError("Couldn't find todo in db."));
                         return null;
                     }
 
-                    repository.Delete(task);
-                    return $"The task with the id: {taskId} has been successfully deleted from db.";
+                    repository.Delete(todo);
+                    return $"The todo with the id: {id} has been successfully deleted from db.";
                 }
             );
         }

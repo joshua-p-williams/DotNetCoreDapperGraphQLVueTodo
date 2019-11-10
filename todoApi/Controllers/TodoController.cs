@@ -3,14 +3,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using todoApi.Controllers.Base;
 using todoApi.Repositories;
+using todoApi.Models;
 
 namespace todoApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TaskController : ResourceControllerBase<TaskController, todoApi.Models.Task, TaskRepository>
+    public class TodoController : ResourceControllerBase<TodoController, Todo, TodoRepository>
     {
-        public TaskController(ILogger<TaskController> logger, TaskRepository taskRepository) : base(logger, taskRepository)
+        public TodoController(ILogger<TodoController> logger, TodoRepository todoRepository) : base(logger, todoRepository)
         {
         }
     }

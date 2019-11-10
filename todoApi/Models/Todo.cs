@@ -2,11 +2,11 @@ using System;
 
 namespace todoApi.Models
 {
-    public class Task
+    public class Todo
     {
         public int Id { get; set; }
 
-        public String Item { get; set; }
+        public String Details { get; set; }
 
         public Boolean Completed { get; set; }
     }
