@@ -33,7 +33,8 @@ namespace todoApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            RepositoryRegistry.Register(services);
+
+            services.AddRepositories();
 
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
             services.AddScoped<AppSchema>();
@@ -56,9 +57,6 @@ namespace todoApi
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseGraphQL<AppSchema>();
-            app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
-
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -69,6 +67,9 @@ namespace todoApi
             {
                 endpoints.MapControllers();
             });
+
+            app.UseGraphQL<AppSchema>();
+            app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
         }
     }
 }
