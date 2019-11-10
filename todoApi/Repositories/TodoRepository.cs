@@ -16,7 +16,7 @@ namespace todoApi.Repositories
 
         public override Todo GetById(int id)
         {
-            return Get("Select top 1 * from dbo.todos").First();
+            return Get("Select top 1 * from dbo.todos where id = @id", new {id = id}).First();
         }
 
         public override IEnumerable<Todo> FetchAll()

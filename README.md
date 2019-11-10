@@ -30,4 +30,27 @@ GraphQL
 * dotnet add package GraphQL
 * dotnet add package GraphQL.Server.Transports.AspNetCore
 * dotnet add package GraphQL.Server.Ui.Playground
-* https://localhost:5001/ui/playground
+
+To Test
+
+https://localhost:5001/ui/playground
+
+*Query:*
+
+query($id: Int!) {
+  todo(id: $id) {
+    id
+    details
+    completed
+  }
+}
+
+Query Variables:
+
+{ "id": 2 }
+
+*Mutation:*
+
+
+
+

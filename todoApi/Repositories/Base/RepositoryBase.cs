@@ -24,13 +24,13 @@ namespace todoApi.Repositories.Base
         public abstract T Update(T existingItem, T newItem);
         public abstract Boolean Delete(T item);
 
-        public IEnumerable<T> Get(String query)
+        public IEnumerable<T> Get(String query, Object param = null)
         {
             IEnumerable<T> results = null;
 
             using (var connection = new SqlConnection(_config.GetValue<String>($"ConnectionStrings:{_connectionName}")))
             {
-                results = connection.Query<T>(query);
+                results = connection.Query<T>(query, param);
             }
 
             return results;
