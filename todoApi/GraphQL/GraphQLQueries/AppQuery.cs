@@ -22,16 +22,10 @@ namespace todoApi.GraphQL.GraphQLQueries
 
             Field<TodoType>(
                 "todo",
-                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" }),
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "id" }),
                 resolve: context =>
                 {
-                    int id;
-                    if (!int.TryParse(context.GetArgument<string>("id"), out id))
-                    {
-                        context.Errors.Add(new ExecutionError("Wrong value for id"));
-                        return null;
-                    }
-
+                    int id = context.GetArgument<int>("id");
                     return repository.GetById(id);
                 }
             );
