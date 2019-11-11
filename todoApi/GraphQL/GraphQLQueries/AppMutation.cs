@@ -13,44 +13,31 @@ namespace todoApi.GraphQL.GraphQLQueries
 {
     public class AppMutation : ObjectGraphType
     {
-        public AppMutation(TodoRepository repository)
+        public AppMutation(TodoRepository todoRepository, CategoryRepository categoryRepository)
         {
-            Field<TodoType>(
-                "createTodo",
-                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<TodoInputType>> { Name = "todo" }),
-                resolve: context =>
-                {
+            Field<TodoType, Todo>()
+                .Name("createTodo")
+                .Argument<NonNullGraphType<TodoInputType>>("todo", "todo input")
+                .ResolveAsync(context => {
                     var todo = context.GetArgument<Todo>("todo");
-                    return repository.Insert(todo);
-                }
-            );
+                    return todoRepository.InsertAsync(todo);
+                });
 
-            Field<TodoType>(
-                "updateTodo",
-                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<TodoInputType>> { Name = "todo" }),
-                resolve: context =>
-                {
-                    return repository.Update(context.GetArgument<Todo>("todo"));
-                }
-            );
+            Field<TodoType, bool>()
+                .Name("updateTodo")
+                .Argument<NonNullGraphType<TodoInputType>>("todo", "todo input")
+                .ResolveAsync(context => {
+                    var todo = context.GetArgument<Todo>("todo");
+                    return todoRepository.UpdateAsync(todo);
+                });
 
-            Field<StringGraphType>(
-                "deleteTodo",
-                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" }),
-                resolve: context =>
-                {
-                    var id = context.GetArgument<int>("id");
-                    var todo = repository.Get(id);
-                    if (todo == null)
-                    {
-                        context.Errors.Add(new ExecutionError("Couldn't find todo in db."));
-                        return null;
-                    }
-
-                    repository.Delete(todo);
-                    return $"The todo with the id: {id} has been successfully deleted from db.";
-                }
-            );
+            Field<TodoType, bool>()
+                .Name("deleteTodo")
+                .Argument<NonNullGraphType<TodoInputType>>("todo", "todo input")
+                .ResolveAsync(context => {
+                    var todo = context.GetArgument<Todo>("todo");
+                    return todoRepository.DeleteAsync(todo);
+                });
         }
     }
 }

@@ -12,6 +12,7 @@ namespace todoApi.Models
 
         public String CategoryName { get; set; }
 
+        [ComputedAttribute]
         public IEnumerable<Todo> Todos { get; set; }
     }
 }

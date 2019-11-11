@@ -17,30 +17,30 @@ namespace todoApi.GraphQL.GraphQLQueries
         {
             Field<ListGraphType<TodoType>, IEnumerable<Todo>>()
                 .Name("Todos")
-                .Resolve(context => {
-                    return todoRepository.GetAll();
+                .ResolveAsync(context => {
+                    return todoRepository.GetAllAsync();
                 });
 
             Field<TodoType, Todo>()
                 .Name("Todo")
                 .Argument<NonNullGraphType<IntGraphType>>("id", "Unique identifier")
-                .Resolve(context => {
+                .ResolveAsync(context => {
                     int id = context.GetArgument<int>("id");
-                    return todoRepository.Get(id);
+                    return todoRepository.GetAsync(id);
                 });
 
             Field<ListGraphType<CategoryType>, IEnumerable<Category>>()
                 .Name("Categories")
-                .Resolve(context => {
-                    return categoryRepository.GetAll();
+                .ResolveAsync(context => {
+                    return categoryRepository.GetAllAsync();
                 });
 
             Field<CategoryType, Category>()
                 .Name("Category")
                 .Argument<NonNullGraphType<IntGraphType>>("id", "Unique identifier")
-                .Resolve(context => {
+                .ResolveAsync(context => {
                     int id = context.GetArgument<int>("id");
-                    return categoryRepository.Get(id);
+                    return categoryRepository.GetAsync(id);
                 });
 
         }

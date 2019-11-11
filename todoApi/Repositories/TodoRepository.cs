@@ -7,6 +7,7 @@ using todoApi.Repositories;
 using todoApi.Models;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace todoApi.Repositories
 {
@@ -20,12 +21,10 @@ namespace todoApi.Repositories
         {
         }
 
-        public IEnumerable<Todo> GetByCategoryId(dynamic id, IDbTransaction transaction = null, int? commandTimeout = null) 
+        public Task<IEnumerable<Todo>> GetByCategoryId(dynamic id, IDbTransaction transaction = null, int? commandTimeout = null) 
         {
-            using (var connection = new SqlConnection(GetConnectionString()))
-            {
-                return this.GetAll().Where( i => i.CategoryId == id);
-            }
+            // TODO: Need to implement predicate system
+            return this.GetAllAsync(); //.Where( i => i.CategoryId == id);
         }
 
     }

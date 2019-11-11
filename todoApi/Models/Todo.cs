@@ -15,6 +15,7 @@ namespace todoApi.Models
         
         public int? CategoryId { get; set; }
 
+        [ComputedAttribute]
         public Category Category { get; set; }
     }
 }

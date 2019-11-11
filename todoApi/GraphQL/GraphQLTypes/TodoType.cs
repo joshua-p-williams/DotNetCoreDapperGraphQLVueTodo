@@ -18,9 +18,9 @@ namespace todoApi.GraphQL.GraphQLTypes
             Field(x => x.Completed, type: typeof(BooleanGraphType)).Description("Completed property from the todo object.");
 			Field<CategoryType, Category>()
 				.Name("Category")
-				.Resolve(context =>
+				.ResolveAsync(context =>
 				{
-                    return categoryRepository.Get(context.Source.CategoryId);
+                    return categoryRepository.GetAsync(context.Source.CategoryId);
 				});
 
         }
