@@ -22,7 +22,8 @@ Create Web API application
 * dotnet new webapi -o todoApi
 * cd todoApi
 * dotnet add package Dapper
-* dotnet add package System.Data.SqlClient
+* dotnet add package System.Data.SqlClient ? Maybe unnecessary
+* dotnet add package Dapper.Contrib
 * http://localhost:5000/task
 
 GraphQL
@@ -45,12 +46,21 @@ query($id: Int!) {
   }
 }
 
-Query Variables:
+Variables:
 
 { "id": 2 }
 
 *Mutation:*
 
+mutation ($todo: TodoInput!) {
+  createTodo(todo: $todo) {
+    details
+    completed
+  }
+}
 
+Variables:
+
+{ "todo": { "details": "Testing Mutations", "completed": false } }
 
 

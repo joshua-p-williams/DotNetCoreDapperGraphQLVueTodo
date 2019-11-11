@@ -10,8 +10,8 @@ namespace todoApi.GraphQL.GraphQLTypes
     {
         public TodoInputType()
         {
-            Name = "todoInput";
-            Field<NonNullGraphType<StringGraphType>>("destails");
+            Name = "TodoInput";
+            Field<NonNullGraphType<StringGraphType>>("details");
             Field<NonNullGraphType<BooleanGraphType>>("completed");
         }
     }

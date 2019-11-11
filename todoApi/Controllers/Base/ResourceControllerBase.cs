@@ -26,9 +26,15 @@ namespace todoApi.Controllers.Base
         }
 
         [HttpGet]
-        public virtual IEnumerable<TModel> Get()
+        public virtual IEnumerable<TModel> GetAll()
         {
-            return _repository.FetchAll().ToList();
+            return _repository.GetAll();
+        }
+
+        [HttpGet("{id}")]
+        public TModel Get(int id) 
+        {
+            return _repository.Get(id);
         }
     }
 }

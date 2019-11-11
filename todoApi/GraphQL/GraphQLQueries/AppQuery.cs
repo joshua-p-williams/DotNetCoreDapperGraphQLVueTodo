@@ -17,7 +17,7 @@ namespace todoApi.GraphQL.GraphQLQueries
         {
             Field<ListGraphType<TodoType>>(
                "todos",
-               resolve: context => repository.FetchAll()
+               resolve: context => repository.GetAll()
             );
 
             Field<TodoType>(
@@ -26,7 +26,7 @@ namespace todoApi.GraphQL.GraphQLQueries
                 resolve: context =>
                 {
                     int id = context.GetArgument<int>("id");
-                    return repository.GetById(id);
+                    return repository.Get(id);
                 }
             );
         }

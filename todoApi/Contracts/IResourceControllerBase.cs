@@ -7,6 +7,6 @@ namespace todoApi.Contracts
     public interface IResourceControllerBase<TController, TModel, TRepository>
     {
         [HttpGet]
-        IEnumerable<TModel> Get();
+        IEnumerable<TModel> GetAll();
     }
 }

@@ -21,28 +21,16 @@ namespace todoApi.GraphQL.GraphQLQueries
                 resolve: context =>
                 {
                     var todo = context.GetArgument<Todo>("todo");
-                    return repository.Create(todo);
+                    return repository.Insert(todo);
                 }
             );
 
             Field<TodoType>(
                 "updateTodo",
-                arguments: new QueryArguments(
-                    new QueryArgument<NonNullGraphType<TodoInputType>> { Name = "todo" }, 
-                    new QueryArgument<NonNullGraphType<IdGraphType>> { Name = "id" }),
+                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<TodoInputType>> { Name = "todo" }),
                 resolve: context =>
                 {
-                    var newItem = context.GetArgument<Todo>("todo");
-                    var id = context.GetArgument<int>("id");
-
-                    var existingItem = repository.GetById(id);
-                    if (existingItem == null)
-                    {
-                        context.Errors.Add(new ExecutionError("Couldn't find todo in db."));
-                        return null;
-                    }
-
-                    return repository.Update(existingItem, newItem);
+                    return repository.Update(context.GetArgument<Todo>("todo"));
                 }
             );
 
@@ -52,7 +40,7 @@ namespace todoApi.GraphQL.GraphQLQueries
                 resolve: context =>
                 {
                     var id = context.GetArgument<int>("id");
-                    var todo = repository.GetById(id);
+                    var todo = repository.Get(id);
                     if (todo == null)
                     {
                         context.Errors.Add(new ExecutionError("Couldn't find todo in db."));
