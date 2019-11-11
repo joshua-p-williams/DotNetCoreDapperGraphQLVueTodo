@@ -43,6 +43,10 @@ query($id: Int!) {
     id
     details
     completed
+    categoryId
+    category {
+      categoryName
+    }
   }
 }
 

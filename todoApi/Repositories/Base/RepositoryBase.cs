@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using Dapper;
 using Dapper.Contrib.Extensions;
+using System.Threading.Tasks;
 
 namespace todoApi.Repositories.Base
 {
@@ -15,13 +16,10 @@ namespace todoApi.Repositories.Base
         protected readonly IConfiguration _config;
         protected String _connectionName;
 
-        protected String _tableName;
-
-        public RepositoryBase(IConfiguration config, String connectionName, String tableName)
+        public RepositoryBase(IConfiguration config, String connectionName)
         {
             this._config = config;
             this._connectionName = connectionName;
-            this._tableName = tableName;
         }
 
         protected virtual String GetConnectionString()
@@ -36,12 +34,28 @@ namespace todoApi.Repositories.Base
                 return SqlMapperExtensions.Get<T>(connection, id);
             }
         }
+
+        public virtual Task<T> GetAsync(dynamic id, IDbTransaction transaction = null, int? commandTimeout = null) 
+        {
+            using (var connection = new SqlConnection(GetConnectionString()))
+            {
+                return SqlMapperExtensions.GetAsync<T>(connection, id);
+            }
+        }
         
         public virtual IEnumerable<T> GetAll(IDbTransaction transaction = null, int? commandTimeout = null)
         {
             using (var connection = new SqlConnection(GetConnectionString()))
             {
                 return SqlMapperExtensions.GetAll<T>(connection, transaction, commandTimeout);
+            }
+        }
+        
+        public virtual Task<IEnumerable<T>> GetAllAsync(IDbTransaction transaction = null, int? commandTimeout = null)
+        {
+            using (var connection = new SqlConnection(GetConnectionString()))
+            {
+                return SqlMapperExtensions.GetAllAsync<T>(connection, transaction, commandTimeout);
             }
         }
 

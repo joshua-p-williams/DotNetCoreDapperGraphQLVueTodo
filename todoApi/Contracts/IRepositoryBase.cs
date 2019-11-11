@@ -1,13 +1,16 @@
 using System;
 using System.Data;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace todoApi.Contracts
 {
     public interface IRepositoryBase<T>
     {
         T Get(dynamic id, IDbTransaction transaction = null, int? commandTimeout = null);
+        Task<T> GetAsync(dynamic id, IDbTransaction transaction = null, int? commandTimeout = null);
         IEnumerable<T> GetAll(IDbTransaction transaction = null, int? commandTimeout = null);
+        Task<IEnumerable<T>> GetAllAsync(IDbTransaction transaction = null, int? commandTimeout = null);
         T Insert(T entityToInsert, IDbTransaction transaction = null, int? commandTimeout = null);
         long Insert(IEnumerable<T> list, IDbTransaction transaction = null, int? commandTimeout = null);
         bool Update(T entityToUpdate, IDbTransaction transaction = null, int? commandTimeout = null);

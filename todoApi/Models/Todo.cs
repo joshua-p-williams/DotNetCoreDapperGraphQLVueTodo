@@ -12,5 +12,9 @@ namespace todoApi.Models
         public String Details { get; set; }
 
         public Boolean Completed { get; set; }
+        
+        public int? CategoryId { get; set; }
+
+        public Category Category { get; set; }
     }
 }

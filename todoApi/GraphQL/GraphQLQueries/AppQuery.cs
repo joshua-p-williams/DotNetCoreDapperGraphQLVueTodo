@@ -13,22 +13,36 @@ namespace todoApi.GraphQL.GraphQLQueries
 {
     public class AppQuery : ObjectGraphType
     {
-        public AppQuery(TodoRepository repository)
+        public AppQuery(TodoRepository todoRepository, CategoryRepository categoryRepository)
         {
-            Field<ListGraphType<TodoType>>(
-               "todos",
-               resolve: context => repository.GetAll()
-            );
+            Field<ListGraphType<TodoType>, IEnumerable<Todo>>()
+                .Name("Todos")
+                .Resolve(context => {
+                    return todoRepository.GetAll();
+                });
 
-            Field<TodoType>(
-                "todo",
-                arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "id" }),
-                resolve: context =>
-                {
+            Field<TodoType, Todo>()
+                .Name("Todo")
+                .Argument<NonNullGraphType<IntGraphType>>("id", "Unique identifier")
+                .Resolve(context => {
                     int id = context.GetArgument<int>("id");
-                    return repository.Get(id);
-                }
-            );
+                    return todoRepository.Get(id);
+                });
+
+            Field<ListGraphType<CategoryType>, IEnumerable<Category>>()
+                .Name("Categories")
+                .Resolve(context => {
+                    return categoryRepository.GetAll();
+                });
+
+            Field<CategoryType, Category>()
+                .Name("Category")
+                .Argument<NonNullGraphType<IntGraphType>>("id", "Unique identifier")
+                .Resolve(context => {
+                    int id = context.GetArgument<int>("id");
+                    return categoryRepository.Get(id);
+                });
+
         }
     }
 }
