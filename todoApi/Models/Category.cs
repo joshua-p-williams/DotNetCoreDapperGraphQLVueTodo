@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Dapper.Contrib.Extensions;
+using Dapper;
 
 namespace todoApi.Models
 {
@@ -12,7 +12,6 @@ namespace todoApi.Models
 
         public String CategoryName { get; set; }
 
-        [ComputedAttribute]
         public IEnumerable<Todo> Todos { get; set; }
     }
 }

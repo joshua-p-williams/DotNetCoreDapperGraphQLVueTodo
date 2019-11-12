@@ -15,7 +15,7 @@ namespace todoApi.GraphQL.GraphQLQueries
     {
         public AppMutation(TodoRepository todoRepository, CategoryRepository categoryRepository)
         {
-            Field<TodoType, Todo>()
+            Field<TodoType, int?>()
                 .Name("createTodo")
                 .Argument<NonNullGraphType<TodoInputType>>("todo", "todo input")
                 .ResolveAsync(context => {
@@ -23,7 +23,7 @@ namespace todoApi.GraphQL.GraphQLQueries
                     return todoRepository.InsertAsync(todo);
                 });
 
-            Field<TodoType, bool>()
+            Field<TodoType, int>()
                 .Name("updateTodo")
                 .Argument<NonNullGraphType<TodoInputType>>("todo", "todo input")
                 .ResolveAsync(context => {
@@ -31,7 +31,7 @@ namespace todoApi.GraphQL.GraphQLQueries
                     return todoRepository.UpdateAsync(todo);
                 });
 
-            Field<TodoType, bool>()
+            Field<TodoType, int>()
                 .Name("deleteTodo")
                 .Argument<NonNullGraphType<TodoInputType>>("todo", "todo input")
                 .ResolveAsync(context => {

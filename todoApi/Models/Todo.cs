@@ -1,5 +1,5 @@
 using System;
-using Dapper.Contrib.Extensions;
+using Dapper;
 
 namespace todoApi.Models
 {
@@ -15,7 +15,6 @@ namespace todoApi.Models
         
         public int? CategoryId { get; set; }
 
-        [ComputedAttribute]
         public Category Category { get; set; }
     }
 }

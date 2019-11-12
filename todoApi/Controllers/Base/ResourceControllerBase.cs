@@ -26,9 +26,9 @@ namespace todoApi.Controllers.Base
         }
 
         [HttpGet]
-        public virtual Task<IEnumerable<TModel>> GetAll()
+        public virtual Task<IEnumerable<TModel>> GetList()
         {
-            return _repository.GetAllAsync();
+            return _repository.GetListAsync();
         }
 
         [HttpGet("{id}")]

@@ -6,8 +6,8 @@ using todoApi.Contracts;
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using Dapper;
-using Dapper.Contrib.Extensions;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace todoApi.Repositories.Base
 {
@@ -29,95 +29,145 @@ namespace todoApi.Repositories.Base
             return _config.GetValue<String>($"ConnectionStrings:{_connectionName}");
         }
 
-        public virtual T Get(dynamic id, IDbTransaction transaction = null, int? commandTimeout = null) 
+        public int Delete(object id, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-            return SqlMapperExtensions.Get<T>(_connection, id);
+            return SimpleCRUD.Delete<T>(_connection, id, transaction, commandTimeout);
         }
 
-        public virtual Task<T> GetAsync(dynamic id, IDbTransaction transaction = null, int? commandTimeout = null) 
+        public int Delete(T entityToDelete, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-            return SqlMapperExtensions.GetAsync<T>(_connection, id);
-        }
-        
-        public virtual IEnumerable<T> GetAll(IDbTransaction transaction = null, int? commandTimeout = null)
-        {
-            return SqlMapperExtensions.GetAll<T>(_connection, transaction, commandTimeout);
-        }
-        
-        public virtual Task<IEnumerable<T>> GetAllAsync(IDbTransaction transaction = null, int? commandTimeout = null)
-        {
-            return SqlMapperExtensions.GetAllAsync<T>(_connection, transaction, commandTimeout);
+            return SimpleCRUD.Delete<T>(_connection, entityToDelete, transaction, commandTimeout);
         }
 
-        public virtual T Insert(T entityToInsert, IDbTransaction transaction = null, int? commandTimeout = null)
+        public Task<int> DeleteAsync(object id, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-            var id = SqlMapperExtensions.Insert<T>(_connection, entityToInsert, transaction, commandTimeout);
-            return this.Get(id);
-        }
-        public virtual Task<T> InsertAsync(T entityToInsert, IDbTransaction transaction = null, int? commandTimeout = null)
-        {
-            var id = SqlMapperExtensions.Insert<T>(_connection, entityToInsert, transaction, commandTimeout);
-            return this.GetAsync(id);
+			return SimpleCRUD.DeleteAsync<T>(_connection, id, transaction, commandTimeout);
         }
 
-        public virtual long Insert(IEnumerable<T> list, IDbTransaction transaction = null, int? commandTimeout = null)
+        public Task<int> DeleteAsync(T entityToDelete, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-            return SqlMapperExtensions.Insert<IEnumerable<T>>(_connection, list, transaction, commandTimeout);
+			return SimpleCRUD.DeleteAsync<T>(_connection, entityToDelete, transaction, commandTimeout);
         }
 
-        public virtual Task<int> InsertAsync(IEnumerable<T> list, IDbTransaction transaction = null, int? commandTimeout = null)
+        public int DeleteList(string conditions, object parameters = null, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-            return SqlMapperExtensions.InsertAsync<IEnumerable<T>>(_connection, list, transaction, commandTimeout);
+			return SimpleCRUD.DeleteList<T>(_connection, conditions, parameters, transaction, commandTimeout);
         }
 
-        public virtual bool Update(T entityToUpdate, IDbTransaction transaction = null, int? commandTimeout = null)
+        public int DeleteList(object whereConditions, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-            return SqlMapperExtensions.Update<T>(_connection, entityToUpdate, transaction, commandTimeout);
+			return SimpleCRUD.DeleteList<T>(_connection, whereConditions, transaction, commandTimeout);
         }
 
-        public virtual Task<bool> UpdateAsync(T entityToUpdate, IDbTransaction transaction = null, int? commandTimeout = null)
+        public Task<int> DeleteListAsync(string conditions, object parameters = null, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-            return SqlMapperExtensions.UpdateAsync<T>(_connection, entityToUpdate, transaction, commandTimeout);
+			return SimpleCRUD.DeleteListAsync<T>(_connection, conditions, parameters, transaction, commandTimeout);
         }
 
-        public virtual bool Update(IEnumerable<T> list, IDbTransaction transaction = null, int? commandTimeout = null)
+        public Task<int> DeleteListAsync(object whereConditions, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-            return SqlMapperExtensions.Update<IEnumerable<T>>(_connection, list, transaction, commandTimeout);
+			return SimpleCRUD.DeleteListAsync<T>(_connection, whereConditions, transaction, commandTimeout);
         }
 
-        public virtual Task<bool> UpdateAsync(IEnumerable<T> list, IDbTransaction transaction = null, int? commandTimeout = null)
+        public T Get(object id, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-            return SqlMapperExtensions.UpdateAsync<IEnumerable<T>>(_connection, list, transaction, commandTimeout);
+			return SimpleCRUD.Get<T>(_connection, id, transaction, commandTimeout);
         }
 
-        public virtual bool Delete(T entityToDelete, IDbTransaction transaction = null, int? commandTimeout = null)
+        public Task<T> GetAsync(object id, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-            return SqlMapperExtensions.Delete<T>(_connection, entityToDelete, transaction, commandTimeout);
+			return SimpleCRUD.GetAsync<T>(_connection, id, transaction, commandTimeout);
         }
 
-        public virtual Task<bool> DeleteAsync(T entityToDelete, IDbTransaction transaction = null, int? commandTimeout = null)
+        public IEnumerable<T> GetList()
         {
-            return SqlMapperExtensions.DeleteAsync<T>(_connection, entityToDelete, transaction, commandTimeout);
+			return SimpleCRUD.GetList<T>(_connection);
         }
 
-        public virtual bool Delete(IEnumerable<T> list, IDbTransaction transaction = null, int? commandTimeout = null)
+        public IEnumerable<T> GetList(string conditions, object parameters = null, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-            return SqlMapperExtensions.Delete<IEnumerable<T>>(_connection, list, transaction, commandTimeout);
+			return SimpleCRUD.GetList<T>(_connection, conditions, parameters, transaction, commandTimeout);
         }
 
-        public virtual Task<bool> DeleteAsync(IEnumerable<T> list, IDbTransaction transaction = null, int? commandTimeout = null)
+        public IEnumerable<T> GetList(object whereConditions, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-            return SqlMapperExtensions.DeleteAsync<IEnumerable<T>>(_connection, list, transaction, commandTimeout);
+			return SimpleCRUD.GetList<T>(_connection, whereConditions, transaction, commandTimeout);
         }
 
-        public virtual bool DeleteAll(IDbTransaction transaction = null, int? commandTimeout = null)
+        public Task<IEnumerable<T>> GetListAsync()
         {
-            return SqlMapperExtensions.DeleteAll<T>(_connection, transaction, commandTimeout);
+			return SimpleCRUD.GetListAsync<T>(_connection);
         }
 
-        public virtual Task<bool> DeleteAllAsync(IDbTransaction transaction = null, int? commandTimeout = null)
+        public Task<IEnumerable<T>> GetListAsync(string conditions, object parameters = null, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-            return SqlMapperExtensions.DeleteAllAsync<T>(_connection, transaction, commandTimeout);
+			return SimpleCRUD.GetListAsync<T>(_connection, conditions, parameters, transaction, commandTimeout);
         }
+
+        public Task<IEnumerable<T>> GetListAsync(object whereConditions, IDbTransaction transaction = null, int? commandTimeout = null)
+        {
+			return SimpleCRUD.GetListAsync<T>(_connection, whereConditions, transaction, commandTimeout);
+        }
+
+        public IEnumerable<T> GetListPaged(int pageNumber, int rowsPerPage, string conditions, string orderby, object parameters = null, IDbTransaction transaction = null, int? commandTimeout = null)
+        {
+			return SimpleCRUD.GetListPaged<T>(_connection, pageNumber, rowsPerPage, conditions, orderby, parameters, transaction, commandTimeout);
+        }
+
+        public Task<IEnumerable<T>> GetListPagedAsync(int pageNumber, int rowsPerPage, string conditions, string orderby, object parameters = null, IDbTransaction transaction = null, int? commandTimeout = null)
+        {
+			return SimpleCRUD.GetListPagedAsync<T>(_connection, pageNumber, rowsPerPage, conditions, orderby, parameters, transaction, commandTimeout);
+        }
+
+        public int? Insert<TEntity>(TEntity entityToInsert, IDbTransaction transaction = null, int? commandTimeout = null)
+        {
+			return SimpleCRUD.Insert<TEntity>(_connection, entityToInsert, transaction, commandTimeout);
+        }
+
+        public TKey Insert<TKey, TEntity>(TEntity entityToInsert, IDbTransaction transaction = null, int? commandTimeout = null)
+        {
+			return SimpleCRUD.Insert<TKey, TEntity>(_connection, entityToInsert, transaction, commandTimeout);
+        }
+
+        public Task<TKey> InsertAsync<TKey, TEntity>(TEntity entityToInsert, IDbTransaction transaction = null, int? commandTimeout = null)
+        {
+			return SimpleCRUD.InsertAsync<TKey, TEntity>(_connection, entityToInsert, transaction, commandTimeout);
+        }
+
+        public Task<int?> InsertAsync<TEntity>(TEntity entityToInsert, IDbTransaction transaction = null, int? commandTimeout = null)
+        {
+			return SimpleCRUD.InsertAsync<TEntity>(_connection, entityToInsert, transaction, commandTimeout);
+        }
+
+        public int RecordCount(string conditions = "", object parameters = null, IDbTransaction transaction = null, int? commandTimeout = null)
+        {
+			return SimpleCRUD.RecordCount<T>(_connection, conditions, parameters, transaction, commandTimeout);
+        }
+
+        public int RecordCount(object whereConditions, IDbTransaction transaction = null, int? commandTimeout = null)
+        {
+			return SimpleCRUD.RecordCount<T>(_connection, whereConditions, transaction, commandTimeout);
+        }
+
+        public Task<int> RecordCountAsync(string conditions = "", object parameters = null, IDbTransaction transaction = null, int? commandTimeout = null)
+        {
+			return SimpleCRUD.RecordCountAsync<T>(_connection, conditions, parameters, transaction, commandTimeout);
+        }
+
+        public Task<int> RecordCountAsync(object whereConditions, IDbTransaction transaction = null, int? commandTimeout = null)
+        {
+			return SimpleCRUD.RecordCountAsync<T>(_connection, whereConditions, transaction, commandTimeout);
+        }
+
+        public int Update<TEntity>(TEntity entityToUpdate, IDbTransaction transaction = null, int? commandTimeout = null)
+        {
+			return SimpleCRUD.Update<TEntity>(_connection, entityToUpdate, transaction, commandTimeout);
+        }
+
+        public Task<int> UpdateAsync<TEntity>(TEntity entityToUpdate, IDbTransaction transaction = null, int? commandTimeout = null, CancellationToken? token = null)
+        {
+			return SimpleCRUD.UpdateAsync<TEntity>(_connection, entityToUpdate, transaction, commandTimeout, token);
+        }
+
     }
 }

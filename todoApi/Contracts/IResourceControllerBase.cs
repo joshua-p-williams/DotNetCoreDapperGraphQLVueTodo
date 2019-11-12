@@ -8,7 +8,7 @@ namespace todoApi.Contracts
     public interface IResourceControllerBase<TController, TModel, TRepository>
     {
         [HttpGet]
-        Task<IEnumerable<TModel>> GetAll();
+        Task<IEnumerable<TModel>> GetList();
 
         [HttpGet("{id}")]
         Task<TModel> Get(int id);

@@ -18,7 +18,7 @@ namespace todoApi.GraphQL.GraphQLQueries
             Field<ListGraphType<TodoType>, IEnumerable<Todo>>()
                 .Name("Todos")
                 .ResolveAsync(context => {
-                    return todoRepository.GetAllAsync();
+                    return todoRepository.GetListAsync();
                 });
 
             Field<TodoType, Todo>()
@@ -32,7 +32,7 @@ namespace todoApi.GraphQL.GraphQLQueries
             Field<ListGraphType<CategoryType>, IEnumerable<Category>>()
                 .Name("Categories")
                 .ResolveAsync(context => {
-                    return categoryRepository.GetAllAsync();
+                    return categoryRepository.GetListAsync();
                 });
 
             Field<CategoryType, Category>()

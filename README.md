@@ -23,11 +23,12 @@ Create Web API application
 * cd todoApi
 * dotnet add package Dapper
 * dotnet add package System.Data.SqlClient ? Maybe unnecessary
-* dotnet add package Dapper.Contrib
+* dotnet add package Dapper.SimpleCRUD
 * http://localhost:5000/task
 
 GraphQL
 * https://code-maze.com/graphql-aspnetcore-basics/
+* https://github.com/fiyazbinhasan/GraphQLCore/
 * dotnet add package GraphQL
 * dotnet add package GraphQL.Server.Transports.AspNetCore
 * dotnet add package GraphQL.Server.Ui.Playground

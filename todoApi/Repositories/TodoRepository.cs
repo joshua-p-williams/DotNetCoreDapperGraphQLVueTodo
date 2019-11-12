@@ -24,7 +24,7 @@ namespace todoApi.Repositories
         public Task<IEnumerable<Todo>> GetByCategoryId(dynamic id, IDbTransaction transaction = null, int? commandTimeout = null) 
         {
             // TODO: Need to implement predicate system
-            return this.GetAllAsync(); //.Where( i => i.CategoryId == id);
+            return this.GetListAsync(new { CategoryId = id });
         }
 
     }
