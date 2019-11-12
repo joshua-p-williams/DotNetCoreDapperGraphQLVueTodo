@@ -13,11 +13,7 @@ namespace todoApi.Repositories
 {
     public class TodoRepository : RepositoryBase<Todo>
     {
-        public TodoRepository(IConfiguration config) 
-        : base(
-            config, 
-            "DefaultConnection"
-        )
+        public TodoRepository(IConfiguration config)  : base (config)
         {
         }
 

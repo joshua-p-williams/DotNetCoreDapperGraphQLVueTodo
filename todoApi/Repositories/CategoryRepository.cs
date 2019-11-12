@@ -10,11 +10,7 @@ namespace todoApi.Repositories
 {
     public class CategoryRepository : RepositoryBase<Category>
     {
-        public CategoryRepository(IConfiguration config) 
-        : base(
-            config, 
-            "DefaultConnection"
-        )
+        public CategoryRepository(IConfiguration config) : base (config)
         {
         }
     }

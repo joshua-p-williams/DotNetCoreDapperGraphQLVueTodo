@@ -3,6 +3,7 @@ using Dapper;
 
 namespace todoApi.Models
 {
+    [ConnectionDetails("DefaultConnection")]
     [Table ("Todos")]
     public class Todo
     {

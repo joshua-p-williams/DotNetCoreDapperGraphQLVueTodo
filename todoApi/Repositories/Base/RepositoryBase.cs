@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using Dapper;
 using System.Threading.Tasks;
 using System.Threading;
+using todoApi.Models;
 
 namespace todoApi.Repositories.Base
 {
@@ -17,10 +18,10 @@ namespace todoApi.Repositories.Base
         protected String _connectionName;
         protected SqlConnection _connection;
 
-        public RepositoryBase(IConfiguration config, String connectionName)
+        public RepositoryBase(IConfiguration config)
         {
             this._config = config;
-            this._connectionName = connectionName;
+            this._connectionName = ConnectionDetails.GetConnectionName<T>();
             this._connection = new SqlConnection(GetConnectionString());
         }
 
