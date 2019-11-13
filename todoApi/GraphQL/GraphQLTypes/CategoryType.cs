@@ -16,7 +16,7 @@ namespace todoApi.GraphQL.GraphQLTypes
             Field(x => x.CategoryName).Description("The Name property from the category object.");
 			Field<ListGraphType<TodoType>, IEnumerable<Todo>>()
                 .Name("Todos")
-                .ResolveAsync(context => {
+                .Resolve(context => {
                     return todoRepository.GetByCategoryId(context.Source.Id);
 			    });
 

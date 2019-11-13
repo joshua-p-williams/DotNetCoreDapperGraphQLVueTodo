@@ -38,6 +38,30 @@ To Test
 https://localhost:5001/ui/playground
 
 *Query:*
+{
+  categories {
+    id
+    categoryName
+    todos {
+      id
+      details
+      completed
+    }
+  }
+  todos {
+    id
+    details
+    completed
+    categoryId
+    category {
+      id
+      categoryName
+    }
+  }
+}
+
+
+*Query:*
 
 query($id: Int!) {
   todo(id: $id) {
@@ -46,6 +70,7 @@ query($id: Int!) {
     completed
     categoryId
     category {
+      id
       categoryName
     }
   }
@@ -59,6 +84,7 @@ Variables:
 
 mutation ($todo: TodoInput!) {
   createTodo(todo: $todo) {
+    id
     details
     completed
   }

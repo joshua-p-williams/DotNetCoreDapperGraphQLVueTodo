@@ -15,12 +15,13 @@ namespace todoApi.GraphQL.GraphQLQueries
     {
         public AppMutation(TodoRepository todoRepository, CategoryRepository categoryRepository)
         {
-            Field<TodoType, int?>()
+            Field<TodoType, Todo>()
                 .Name("createTodo")
                 .Argument<NonNullGraphType<TodoInputType>>("todo", "todo input")
                 .ResolveAsync(context => {
                     var todo = context.GetArgument<Todo>("todo");
-                    return todoRepository.InsertAsync(todo);
+                    var id = todoRepository.Insert(todo);
+                    return todoRepository.GetAsync(id.Value);
                 });
 
             Field<TodoType, int>()

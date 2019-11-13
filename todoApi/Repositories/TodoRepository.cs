@@ -17,10 +17,10 @@ namespace todoApi.Repositories
         {
         }
 
-        public Task<IEnumerable<Todo>> GetByCategoryId(dynamic id, IDbTransaction transaction = null, int? commandTimeout = null) 
+        public IEnumerable<Todo> GetByCategoryId(dynamic id, IDbTransaction transaction = null, int? commandTimeout = null) 
         {
             // TODO: Need to implement predicate system
-            return this.GetListAsync(new { CategoryId = id });
+            return this.GetList(new { CategoryId = id });
         }
 
     }
