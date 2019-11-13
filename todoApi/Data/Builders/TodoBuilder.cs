@@ -5,6 +5,5 @@ namespace todoApi.Data.Builders
 {
     public class TodoBuilder : BuilderBase
     {
-        
     }
 }

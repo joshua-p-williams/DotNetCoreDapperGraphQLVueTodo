@@ -6,7 +6,11 @@ using System.Threading;
 
 namespace todoApi.Data.Builders
 {
-    public class BuilderBase : IBuilderBase
+    public abstract class BuilderBase : IBuilderBase
     {
+        public int getTest()
+        {
+            return 1;
+        }
     }
 }
