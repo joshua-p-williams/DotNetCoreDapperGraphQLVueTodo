@@ -16,12 +16,5 @@ namespace todoApi.Repositories
         public TodoRepository(IConfiguration config)  : base (config)
         {
         }
-
-        public IEnumerable<Todo> GetByCategoryId(dynamic id, IDbTransaction transaction = null, int? commandTimeout = null) 
-        {
-            // TODO: Need to implement predicate system
-            return this.GetList(new { CategoryId = id });
-        }
-
     }
 }

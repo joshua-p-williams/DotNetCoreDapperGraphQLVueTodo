@@ -17,7 +17,7 @@ namespace todoApi.GraphQL.GraphQLTypes
 			Field<ListGraphType<TodoType>, IEnumerable<Todo>>()
                 .Name("Todos")
                 .Resolve(context => {
-                    return todoRepository.GetByCategoryId(context.Source.Id);
+                    return todoRepository.GetList(new { CategoryId = context.Source.Id });
 			    });
 
         }
