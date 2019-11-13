@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
-using todoApi.Contracts;
+using todoApi.Data.Repositories;
 
-namespace todoApi.Controllers.Base
+namespace todoApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]

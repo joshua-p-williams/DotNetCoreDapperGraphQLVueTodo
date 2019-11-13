@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Server;
 using GraphQL.Server.Ui.Playground;
-using todoApi.GraphQL.GraphQLSchema;
+using todoApi.Data.GraphQL.Schemas;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -15,7 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using todoApi.Services;
+using todoApi.Data.Repositories;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 namespace todoApi
