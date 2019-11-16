@@ -13,9 +13,14 @@ namespace todoApi.Data.Builders
     public abstract class BuilderBase<TModel> : IBuilder<TModel> where TModel : new()
     {
         protected SqlBuilder _builder = new SqlBuilder();
-        public Bindable<TModel> Where(String json)
+        public Bindable<TModel> WhereFromJson(String json)
         {
             return _builder.WhereFromJson<TModel>(json);
+        }
+
+        public Bindable<TModel> Where(JObject json)
+        {
+            return _builder.Where<TModel>(json);
         }
 
         public int getTest()

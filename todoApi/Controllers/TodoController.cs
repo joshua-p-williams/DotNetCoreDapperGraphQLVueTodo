@@ -19,17 +19,10 @@ namespace todoApi.Controllers
         }
 
         [HttpGet("test")]
-        /*
-        public Dapper.SqlBuilder.Template GetTest()
-        {
-            var j = new todoApi.Data.Builders.TodoBuilder();
-            return j.Where("{ 'Id': 2, 'Detailsasdf': 'Change the oil', 'b': 'c' }");
-        }
-        /**/
         public Task<IEnumerable<Todo>> GetTest()
         {
             var j = new todoApi.Data.Builders.TodoBuilder();
-            var x = j.Where("{ 'Id': 2, 'Details': 'Change the oil', 'b': 'c' }");
+            var x = j.WhereFromJson("{ 'Id': 2, 'Details': 'Change the oil', 'b': 'c' }");
 
             return _repository.GetListAsync(x.Sql, x.Parameters);
         }

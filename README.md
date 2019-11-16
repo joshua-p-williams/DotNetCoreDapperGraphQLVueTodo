@@ -95,3 +95,5 @@ Variables:
 { "todo": { "details": "Testing Mutations", "completed": false } }
 
 
+# Forget GraphQL get real work down with *Constrainables*
+https://localhost:5001/todo/query/{'id':2}

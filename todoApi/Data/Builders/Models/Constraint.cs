@@ -17,7 +17,7 @@ namespace todoApi.Data.Builders
 
             foreach(var item in constraints)
             {
-                if (item.Column.Equals(column))
+                if (item.Column.Equals(column, StringComparison.InvariantCultureIgnoreCase))
                 {
                     output = true;
                     break;
@@ -33,7 +33,7 @@ namespace todoApi.Data.Builders
 
             foreach(var item in constraints)
             {
-                if (item.Column.Equals(column))
+                if (item.Column.Equals(column, StringComparison.InvariantCultureIgnoreCase))
                 {
                     output = item;
                     break;

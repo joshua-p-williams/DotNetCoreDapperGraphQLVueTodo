@@ -7,14 +7,15 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using todoApi.Data.Repositories;
 using todoApi.Data.Builders;
+using Newtonsoft.Json.Linq;
 
 namespace todoApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public abstract class ResourceControllerBase<TController, TModel, TRepository, TBuilder> : Controller, IResourceController<TController, TModel, TRepository, TBuilder> 
+    public abstract class ResourceControllerBase<TController, TModel, TRepository, TBuilder> : Controller, IResourceController<TController, TModel, TRepository, TBuilder>
         where TController : class
-        where TModel : class
+        where TModel : new()
         where TRepository : IRepository<TModel>
         where TBuilder : IBuilder<TModel>
     {
@@ -42,5 +43,13 @@ namespace todoApi.Controllers
         {
             return _repository.GetAsync(id);
         }
+
+        [HttpGet("query/{constraints}")]
+        public Task<IEnumerable<TModel>> Query(String constraints)
+        {
+            var bindable = _builder.WhereFromJson(constraints);
+            return _repository.GetListAsync(bindable.Sql, bindable.Parameters);
+        }
+
     }
 }
