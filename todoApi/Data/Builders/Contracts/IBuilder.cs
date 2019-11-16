@@ -1,12 +1,12 @@
 using System;
-using System.Data;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using System.Threading;
 
 namespace todoApi.Data.Builders
 {
-    public interface IBuilderBase
+    public interface IBuilder<TModel>
     {
+        
     }
 }

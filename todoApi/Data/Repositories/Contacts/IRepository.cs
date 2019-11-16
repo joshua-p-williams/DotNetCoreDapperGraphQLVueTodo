@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace todoApi.Data.Repositories
 {
-    public interface IRepositoryBase<T>
+    public interface IRepository<T>
     {
         int Delete(object id, IDbTransaction transaction = null, int? commandTimeout = null);
         int Delete(T entityToDelete, IDbTransaction transaction = null, int? commandTimeout = null);

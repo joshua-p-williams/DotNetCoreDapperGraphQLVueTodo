@@ -15,7 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using todoApi.Data.Repositories;
+using todoApi.Data;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 namespace todoApi
@@ -35,6 +35,7 @@ namespace todoApi
             services.AddControllers();
 
             services.AddRepositories();
+            services.AddBuilders();
 
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
             services.AddScoped<AppSchema>();

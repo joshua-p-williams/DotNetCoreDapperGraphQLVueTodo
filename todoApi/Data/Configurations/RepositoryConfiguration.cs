@@ -2,7 +2,7 @@ using System;
 using todoApi.Data.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace todoApi.Data.Repositories
+namespace todoApi.Data
 {
     public static class RepositoryConfiguration
     {

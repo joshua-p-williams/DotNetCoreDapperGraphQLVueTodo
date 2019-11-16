@@ -11,7 +11,7 @@ using todoApi.Data.Models;
 
 namespace todoApi.Data.Repositories
 {
-    public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
+    public abstract class RepositoryBase<T> : IRepository<T> where T : class
     {
         protected readonly IConfiguration _config;
         protected String _connectionName;

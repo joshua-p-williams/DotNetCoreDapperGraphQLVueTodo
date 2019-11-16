@@ -6,23 +6,29 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using todoApi.Data.Repositories;
+using todoApi.Data.Builders;
 
 namespace todoApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public abstract class ResourceControllerBase<TController, TModel, TRepository> : Controller, IResourceControllerBase<TController, TModel, TRepository> 
+    public abstract class ResourceControllerBase<TController, TModel, TRepository, TBuilder> : Controller, IResourceController<TController, TModel, TRepository, TBuilder> 
         where TController : class
         where TModel : class
-        where TRepository : IRepositoryBase<TModel>
+        where TRepository : IRepository<TModel>
+        where TBuilder : IBuilder<TModel>
     {
-        private readonly ILogger<TController> _logger;
-        private readonly TRepository _repository;
+        protected readonly ILogger<TController> _logger;
 
-        public ResourceControllerBase(ILogger<TController> logger, TRepository repository)
+        protected readonly TRepository _repository;
+
+        protected readonly TBuilder _builder;
+
+        public ResourceControllerBase(ILogger<TController> logger, TRepository repository, TBuilder builder)
         {
             _logger = logger;
             _repository = repository;
+            _builder = builder;
         }
 
         [HttpGet]
