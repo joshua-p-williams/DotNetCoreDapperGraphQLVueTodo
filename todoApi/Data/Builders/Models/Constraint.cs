@@ -64,5 +64,22 @@ namespace todoApi.Data.Builders
             this.Value = value;
             this.Comparison = comparison;
         }
+
+        public virtual Dictionary<String, Object> Bind(Dapper.SqlBuilder builder)
+        {
+            var parameters = new Dictionary<String, Object>();
+
+            if (this.Comparison == Comparison.Equals) {
+                builder.Where($"{this.Column} = @{this.Column}");
+            }
+            else {
+                throw new NotImplementedException("This constraint comparison type is not implemented yet");
+            }
+
+            parameters.Add(this.Column, Convert.ChangeType(this.Value, this.DataType));
+
+            return parameters;
+        }
+
     }
 }

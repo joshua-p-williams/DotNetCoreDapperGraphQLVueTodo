@@ -17,7 +17,7 @@ namespace todoApi.Controllers
         where TController : class
         where TModel : new()
         where TRepository : IRepository<TModel>
-        where TBuilder : IBuilder<TModel>
+        where TBuilder : IBuilder
     {
         protected readonly ILogger<TController> _logger;
 

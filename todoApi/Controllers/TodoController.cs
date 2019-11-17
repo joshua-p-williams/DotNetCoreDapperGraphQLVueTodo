@@ -17,16 +17,5 @@ namespace todoApi.Controllers
         public TodoController(ILogger<TodoController> logger, TodoRepository todoRepository, TodoBuilder todoBuilder) : base(logger, todoRepository, todoBuilder)
         {
         }
-
-        [HttpGet("test")]
-        public Task<IEnumerable<Todo>> GetTest()
-        {
-            var j = new todoApi.Data.Builders.TodoBuilder();
-            var x = j.WhereFromJson("{ 'Id': 2, 'Details': 'Change the oil', 'b': 'c' }");
-
-            return _repository.GetListAsync(x.Sql, x.Parameters);
-        }
-        /**/
-
     }
 }

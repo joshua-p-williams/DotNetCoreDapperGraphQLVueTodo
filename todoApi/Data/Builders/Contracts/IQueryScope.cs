@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using Dapper;
 
 namespace todoApi.Data.Builders
 {
-    public interface IBuilder
+    public interface IQueryScope
     {
-        Bindable WhereFromJson(String json);
-        Bindable Where(JObject json);
+        String QueryScopeName { get; }
+        Bindable Build(Constraint constraint);
     }
 }

@@ -9,13 +9,13 @@ using Newtonsoft.Json.Linq;
 
 namespace todoApi.Data.Builders
 {
-    public static class ConstrainableExtensions
+    public class ConstrainableBuilder<TConstraintsModel>
     {
-        public static List<Constraint> GetConstrainables<T>()
+        public List<Constraint> GetConstrainables()
         {
             var output = new List<Constraint>();
 
-            foreach(var prop in typeof(T).GetProperties()) 
+            foreach(var prop in typeof(TConstraintsModel).GetProperties()) 
             {
                 var typeCode = System.Type.GetTypeCode(prop.PropertyType);
                 output.Add( new Constraint(prop.Name, typeCode));
@@ -24,10 +24,10 @@ namespace todoApi.Data.Builders
             return output;         
         }
 
-        public static List<Constraint> GetConstraints<T>(this Hashtable constraints)
+        public List<Constraint> GetConstraints(Hashtable constraints)
         {
             var output = new List<Constraint>();
-            var constrainables = GetConstrainables<T>();
+            var constrainables = this.GetConstrainables();
 
             foreach(var key in constraints.Keys)
             {
@@ -42,7 +42,7 @@ namespace todoApi.Data.Builders
             return output;
         }
 
-        public static List<Constraint> GetConstraints<T>(this JObject json)
+        public List<Constraint> GetConstraints(JObject json)
         {
             var hash = new Hashtable();
             foreach (var item in json) 
@@ -50,13 +50,13 @@ namespace todoApi.Data.Builders
                 hash.Add(item.Key, item.Value.ToString());
             }
 
-            return hash.GetConstraints<T>();
+            return this.GetConstraints(hash);
         }
 
-        public static List<Constraint> GetConstraintsFromJson<T>(String json)
+        public List<Constraint> GetConstraintsFromJson(String json)
         {
             var obj = JsonConvert.DeserializeObject<JObject>(json);
-            return obj.GetConstraints<T>();
+            return this.GetConstraints(obj);
         }
     }
 }

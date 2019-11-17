@@ -8,8 +8,8 @@ namespace todoApi.Data
     {
         public static void AddBuilders(this IServiceCollection services)
         {
-            services.AddSingleton<TodoBuilder>();
-            services.AddSingleton<CategoryBuilder>();
+            services.AddScoped<TodoBuilder>();
+            services.AddScoped<CategoryBuilder>();
         }
     }
 }
