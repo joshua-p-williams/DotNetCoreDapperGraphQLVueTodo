@@ -54,13 +54,12 @@ namespace todoApi.Data.Builders
                         Constraint constraint = null;
                         if (validConstraint.DataType == TypeCode.Object)
                         {
-                            var customObj = instance.GetType().GetProperty(validConstraint.Column).GetValue(instance, null);
-                            var customObjType = customObj.GetType();
-                            var baseConstraintType = typeof(Constraint);
-                            var isConstraint = (customObjType.IsSubclassOf(baseConstraintType) || customObjType == baseConstraintType);
+                            var customObjType = typeof(TConstraintsModel).GetProperty(validConstraint.Column).PropertyType;
+                            var constraintType = typeof(Constraint);
+                            var isConstraint = (customObjType.IsSubclassOf(constraintType) || customObjType == constraintType);
                             if (isConstraint) 
                             {
-                                constraint = (Constraint)customObj;
+                                constraint = (Constraint)Activator.CreateInstance(customObjType);
                                 constraint.DataType = TypeCode.Object;
                                 constraint.Value = constraints[key].ToString();
                                 constraint.Comparison = validConstraint.Comparison;

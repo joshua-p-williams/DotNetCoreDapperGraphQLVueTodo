@@ -10,7 +10,7 @@ using Dapper;
 
 namespace todoApi.Data.Builders
 {
-    public abstract class BuilderBase<TConstraintsModel> 
+    public class BuilderBase<TConstraintsModel> 
         : ConstrainableBuilder<TConstraintsModel>, IBuilder 
         where TConstraintsModel : new()
     {
@@ -44,21 +44,6 @@ namespace todoApi.Data.Builders
         {
             var obj = JsonConvert.DeserializeObject<JObject>(json);
             return this.Where(obj);
-        }
-
-
-
-
-
-        public virtual List<IQueryScope> SetQueryContext()
-        {
-            return null;
-        }
-        
-
-        public int getTest()
-        {
-            return 1;
         }
     }
 }

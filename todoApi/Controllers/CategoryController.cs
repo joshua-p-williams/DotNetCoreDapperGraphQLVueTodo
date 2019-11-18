@@ -12,7 +12,7 @@ namespace todoApi.Controllers
     [Route("[controller]")]
     public class CategoryController : ResourceControllerBase<CategoryController, Category, CategoryRepository, CategoryBuilder>
     {
-        public CategoryController(ILogger<CategoryController> logger, CategoryRepository categoryRepository, CategoryBuilder categoryBuilder) : base(logger, categoryRepository, categoryBuilder)
+        public CategoryController(ILogger<CategoryController> logger, CategoryRepository repository, CategoryBuilder builder) : base(logger, repository, builder)
         {
         }
     }

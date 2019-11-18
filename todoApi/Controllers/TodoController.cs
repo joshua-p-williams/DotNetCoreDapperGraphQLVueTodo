@@ -14,7 +14,7 @@ namespace todoApi.Controllers
     [Route("[controller]")]
     public class TodoController : ResourceControllerBase<TodoController, Todo, TodoRepository, TodoBuilder>
     {
-        public TodoController(ILogger<TodoController> logger, TodoRepository todoRepository, TodoBuilder todoBuilder) : base(logger, todoRepository, todoBuilder)
+        public TodoController(ILogger<TodoController> logger, TodoRepository repository, TodoBuilder builder) : base(logger, repository, builder)
         {
         }
     }
