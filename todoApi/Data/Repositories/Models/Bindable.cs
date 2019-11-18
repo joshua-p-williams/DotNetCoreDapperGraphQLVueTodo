@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace todoApi.Data.Builders
+namespace todoApi.Data.Repositories
 {
     public class Bindable
     {
@@ -12,16 +12,5 @@ namespace todoApi.Data.Builders
         {
             this.Parameters = new Dictionary<String, Object>();
         }
-
-        public static Bindable GetBindable(String sql, Dictionary<String, Object> parameters)
-        {
-            var output = new Bindable();
-
-            output.Sql = sql;
-            output.Parameters = parameters;
-            
-            return output;
-        }
-
     }
 }

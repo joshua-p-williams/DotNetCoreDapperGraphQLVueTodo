@@ -3,10 +3,11 @@ using System.Data;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
+using todoApi.Data.Repositories;
 
 namespace todoApi.Data.Repositories
 {
-    public interface IRepository<T>
+    public interface IRepository<T> : IBuilder
     {
         int Delete(object id, IDbTransaction transaction = null, int? commandTimeout = null);
         int Delete(T entityToDelete, IDbTransaction transaction = null, int? commandTimeout = null);

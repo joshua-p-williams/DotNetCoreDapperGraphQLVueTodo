@@ -6,7 +6,7 @@ using todoApi.Data.Models;
 
 namespace todoApi.Data.Repositories
 {
-    public class CategoryRepository : RepositoryBase<Category>
+    public class CategoryRepository : RepositoryBase<Category, Category>
     {
         public CategoryRepository(IConfiguration config) : base (config)
         {

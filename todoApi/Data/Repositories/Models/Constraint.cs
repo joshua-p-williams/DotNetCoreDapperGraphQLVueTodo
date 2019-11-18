@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace todoApi.Data.Builders
+namespace todoApi.Data.Repositories
 {
     public enum Comparison 
     {
@@ -10,23 +10,6 @@ namespace todoApi.Data.Builders
 
     public static class ConstraintExtensions
     {
-
-        public static Boolean hasColumn(this List<Constraint> constraints, String column)
-        {
-            var output = false;
-
-            foreach(var item in constraints)
-            {
-                if (item.Column.Equals(column, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    output = true;
-                    break;
-                }
-            }
-
-            return output;
-        }
-
         public static Constraint GetByColumn(this List<Constraint> constraints, String column)
         {
             Constraint output = null;

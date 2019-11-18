@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace todoApi.Controllers
 {
-    public interface IResourceController<TController, TModel, TRepository, TBuilder>
+    public interface IResourceController<TController, TModel, TRepository>
     {
         [HttpGet]
         Task<IEnumerable<TModel>> GetList();

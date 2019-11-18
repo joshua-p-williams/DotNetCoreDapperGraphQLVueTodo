@@ -6,30 +6,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using todoApi.Data.Repositories;
-using todoApi.Data.Builders;
 using Newtonsoft.Json.Linq;
 
 namespace todoApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public abstract class ResourceControllerBase<TController, TModel, TRepository, TBuilder> : Controller, IResourceController<TController, TModel, TRepository, TBuilder>
+    public abstract class ResourceControllerBase<TController, TModel, TRepository> : Controller, IResourceController<TController, TModel, TRepository>
         where TController : class
         where TModel : new()
         where TRepository : IRepository<TModel>
-        where TBuilder : IBuilder
     {
         protected readonly ILogger<TController> _logger;
 
         protected readonly TRepository _repository;
 
-        protected readonly TBuilder _builder;
-
-        public ResourceControllerBase(ILogger<TController> logger, TRepository repository, TBuilder builder)
+        public ResourceControllerBase(ILogger<TController> logger, TRepository repository)
         {
             _logger = logger;
             _repository = repository;
-            _builder = builder;
         }
 
         [HttpGet]
@@ -47,7 +42,7 @@ namespace todoApi.Controllers
         [HttpGet("query/{constraints}")]
         public Task<IEnumerable<TModel>> Query(String constraints)
         {
-            var bindable = _builder.WhereFromJson(constraints);
+            var bindable = _repository.WhereFromJson(constraints);
             return _repository.GetListAsync(bindable.Sql, bindable.Parameters);
         }
 

@@ -7,11 +7,12 @@ using System.Collections;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace todoApi.Data.Builders
+namespace todoApi.Data.Repositories
 {
-    public class ConstrainableBuilder<TConstraintsModel> where TConstraintsModel : new()
+    public abstract class ConstrainableBase<TConstraintsModel> 
+        : IConstrainable 
+        where TConstraintsModel : new()
     {
-
         public List<Constraint> GetConstrainables()
         {
             var output = new List<Constraint>();

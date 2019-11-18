@@ -8,10 +8,14 @@ using Dapper;
 using System.Threading.Tasks;
 using System.Threading;
 using todoApi.Data.Models;
+using todoApi.Data.Repositories;
 
 namespace todoApi.Data.Repositories
 {
-    public abstract class RepositoryBase<T> : IRepository<T> where T : class
+    public abstract class RepositoryBase<TModel, TConstraintsModel> 
+        : BuilderBase<TConstraintsModel>, IRepository<TModel> 
+        where TModel : class
+        where TConstraintsModel : new()
     {
         protected readonly IConfiguration _config;
         protected String _connectionName;
@@ -20,7 +24,7 @@ namespace todoApi.Data.Repositories
         public RepositoryBase(IConfiguration config)
         {
             this._config = config;
-            this._connectionName = ConnectionDetails.GetConnectionName<T>();
+            this._connectionName = ConnectionDetails.GetConnectionName<TModel>();
             this._connection = new SqlConnection(GetConnectionString());
         }
 
@@ -31,92 +35,92 @@ namespace todoApi.Data.Repositories
 
         public int Delete(object id, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-            return SimpleCRUD.Delete<T>(_connection, id, transaction, commandTimeout);
+            return SimpleCRUD.Delete<TModel>(_connection, id, transaction, commandTimeout);
         }
 
-        public int Delete(T entityToDelete, IDbTransaction transaction = null, int? commandTimeout = null)
+        public int Delete(TModel entityToDelete, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-            return SimpleCRUD.Delete<T>(_connection, entityToDelete, transaction, commandTimeout);
+            return SimpleCRUD.Delete<TModel>(_connection, entityToDelete, transaction, commandTimeout);
         }
 
         public Task<int> DeleteAsync(object id, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-			return SimpleCRUD.DeleteAsync<T>(_connection, id, transaction, commandTimeout);
+			return SimpleCRUD.DeleteAsync<TModel>(_connection, id, transaction, commandTimeout);
         }
 
-        public Task<int> DeleteAsync(T entityToDelete, IDbTransaction transaction = null, int? commandTimeout = null)
+        public Task<int> DeleteAsync(TModel entityToDelete, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-			return SimpleCRUD.DeleteAsync<T>(_connection, entityToDelete, transaction, commandTimeout);
+			return SimpleCRUD.DeleteAsync<TModel>(_connection, entityToDelete, transaction, commandTimeout);
         }
 
         public int DeleteList(string conditions, object parameters = null, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-			return SimpleCRUD.DeleteList<T>(_connection, conditions, parameters, transaction, commandTimeout);
+			return SimpleCRUD.DeleteList<TModel>(_connection, conditions, parameters, transaction, commandTimeout);
         }
 
         public int DeleteList(object whereConditions, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-			return SimpleCRUD.DeleteList<T>(_connection, whereConditions, transaction, commandTimeout);
+			return SimpleCRUD.DeleteList<TModel>(_connection, whereConditions, transaction, commandTimeout);
         }
 
         public Task<int> DeleteListAsync(string conditions, object parameters = null, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-			return SimpleCRUD.DeleteListAsync<T>(_connection, conditions, parameters, transaction, commandTimeout);
+			return SimpleCRUD.DeleteListAsync<TModel>(_connection, conditions, parameters, transaction, commandTimeout);
         }
 
         public Task<int> DeleteListAsync(object whereConditions, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-			return SimpleCRUD.DeleteListAsync<T>(_connection, whereConditions, transaction, commandTimeout);
+			return SimpleCRUD.DeleteListAsync<TModel>(_connection, whereConditions, transaction, commandTimeout);
         }
 
-        public T Get(object id, IDbTransaction transaction = null, int? commandTimeout = null)
+        public TModel Get(object id, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-			return SimpleCRUD.Get<T>(_connection, id, transaction, commandTimeout);
+			return SimpleCRUD.Get<TModel>(_connection, id, transaction, commandTimeout);
         }
 
-        public Task<T> GetAsync(object id, IDbTransaction transaction = null, int? commandTimeout = null)
+        public Task<TModel> GetAsync(object id, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-			return SimpleCRUD.GetAsync<T>(_connection, id, transaction, commandTimeout);
+			return SimpleCRUD.GetAsync<TModel>(_connection, id, transaction, commandTimeout);
         }
 
-        public IEnumerable<T> GetList()
+        public IEnumerable<TModel> GetList()
         {
-			return SimpleCRUD.GetList<T>(_connection);
+			return SimpleCRUD.GetList<TModel>(_connection);
         }
 
-        public IEnumerable<T> GetList(string conditions, object parameters = null, IDbTransaction transaction = null, int? commandTimeout = null)
+        public IEnumerable<TModel> GetList(string conditions, object parameters = null, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-			return SimpleCRUD.GetList<T>(_connection, conditions, parameters, transaction, commandTimeout);
+			return SimpleCRUD.GetList<TModel>(_connection, conditions, parameters, transaction, commandTimeout);
         }
 
-        public IEnumerable<T> GetList(object whereConditions, IDbTransaction transaction = null, int? commandTimeout = null)
+        public IEnumerable<TModel> GetList(object whereConditions, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-			return SimpleCRUD.GetList<T>(_connection, whereConditions, transaction, commandTimeout);
+			return SimpleCRUD.GetList<TModel>(_connection, whereConditions, transaction, commandTimeout);
         }
 
-        public Task<IEnumerable<T>> GetListAsync()
+        public Task<IEnumerable<TModel>> GetListAsync()
         {
-			return SimpleCRUD.GetListAsync<T>(_connection);
+			return SimpleCRUD.GetListAsync<TModel>(_connection);
         }
 
-        public Task<IEnumerable<T>> GetListAsync(string conditions, object parameters = null, IDbTransaction transaction = null, int? commandTimeout = null)
+        public Task<IEnumerable<TModel>> GetListAsync(string conditions, object parameters = null, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-			return SimpleCRUD.GetListAsync<T>(_connection, conditions, parameters, transaction, commandTimeout);
+			return SimpleCRUD.GetListAsync<TModel>(_connection, conditions, parameters, transaction, commandTimeout);
         }
 
-        public Task<IEnumerable<T>> GetListAsync(object whereConditions, IDbTransaction transaction = null, int? commandTimeout = null)
+        public Task<IEnumerable<TModel>> GetListAsync(object whereConditions, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-			return SimpleCRUD.GetListAsync<T>(_connection, whereConditions, transaction, commandTimeout);
+			return SimpleCRUD.GetListAsync<TModel>(_connection, whereConditions, transaction, commandTimeout);
         }
 
-        public IEnumerable<T> GetListPaged(int pageNumber, int rowsPerPage, string conditions, string orderby, object parameters = null, IDbTransaction transaction = null, int? commandTimeout = null)
+        public IEnumerable<TModel> GetListPaged(int pageNumber, int rowsPerPage, string conditions, string orderby, object parameters = null, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-			return SimpleCRUD.GetListPaged<T>(_connection, pageNumber, rowsPerPage, conditions, orderby, parameters, transaction, commandTimeout);
+			return SimpleCRUD.GetListPaged<TModel>(_connection, pageNumber, rowsPerPage, conditions, orderby, parameters, transaction, commandTimeout);
         }
 
-        public Task<IEnumerable<T>> GetListPagedAsync(int pageNumber, int rowsPerPage, string conditions, string orderby, object parameters = null, IDbTransaction transaction = null, int? commandTimeout = null)
+        public Task<IEnumerable<TModel>> GetListPagedAsync(int pageNumber, int rowsPerPage, string conditions, string orderby, object parameters = null, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-			return SimpleCRUD.GetListPagedAsync<T>(_connection, pageNumber, rowsPerPage, conditions, orderby, parameters, transaction, commandTimeout);
+			return SimpleCRUD.GetListPagedAsync<TModel>(_connection, pageNumber, rowsPerPage, conditions, orderby, parameters, transaction, commandTimeout);
         }
 
         public int? Insert<TEntity>(TEntity entityToInsert, IDbTransaction transaction = null, int? commandTimeout = null)
@@ -141,22 +145,22 @@ namespace todoApi.Data.Repositories
 
         public int RecordCount(string conditions = "", object parameters = null, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-			return SimpleCRUD.RecordCount<T>(_connection, conditions, parameters, transaction, commandTimeout);
+			return SimpleCRUD.RecordCount<TModel>(_connection, conditions, parameters, transaction, commandTimeout);
         }
 
         public int RecordCount(object whereConditions, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-			return SimpleCRUD.RecordCount<T>(_connection, whereConditions, transaction, commandTimeout);
+			return SimpleCRUD.RecordCount<TModel>(_connection, whereConditions, transaction, commandTimeout);
         }
 
         public Task<int> RecordCountAsync(string conditions = "", object parameters = null, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-			return SimpleCRUD.RecordCountAsync<T>(_connection, conditions, parameters, transaction, commandTimeout);
+			return SimpleCRUD.RecordCountAsync<TModel>(_connection, conditions, parameters, transaction, commandTimeout);
         }
 
         public Task<int> RecordCountAsync(object whereConditions, IDbTransaction transaction = null, int? commandTimeout = null)
         {
-			return SimpleCRUD.RecordCountAsync<T>(_connection, whereConditions, transaction, commandTimeout);
+			return SimpleCRUD.RecordCountAsync<TModel>(_connection, whereConditions, transaction, commandTimeout);
         }
 
         public int Update<TEntity>(TEntity entityToUpdate, IDbTransaction transaction = null, int? commandTimeout = null)

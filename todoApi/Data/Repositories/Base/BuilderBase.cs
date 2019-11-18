@@ -8,10 +8,10 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Dapper;
 
-namespace todoApi.Data.Builders
+namespace todoApi.Data.Repositories
 {
-    public class BuilderBase<TConstraintsModel> 
-        : ConstrainableBuilder<TConstraintsModel>, IBuilder 
+    public abstract class BuilderBase<TConstraintsModel> 
+        : ConstrainableBase<TConstraintsModel>, IBuilder 
         where TConstraintsModel : new()
     {
         protected SqlBuilder _builder = new SqlBuilder();

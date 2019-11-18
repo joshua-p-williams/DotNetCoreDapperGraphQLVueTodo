@@ -35,7 +35,6 @@ namespace todoApi
             services.AddControllers();
 
             services.AddRepositories();
-            services.AddBuilders();
 
             services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
             services.AddScoped<AppSchema>();

@@ -8,8 +8,8 @@ namespace todoApi.Data
     {
         public static void AddRepositories(this IServiceCollection services)
         {
-            services.AddSingleton<TodoRepository>();
-            services.AddSingleton<CategoryRepository>();
+            services.AddScoped<TodoRepository>();
+            services.AddScoped<CategoryRepository>();
         }
     }
 }
