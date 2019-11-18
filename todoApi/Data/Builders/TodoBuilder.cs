@@ -6,23 +6,22 @@ using todoApi.Data.Models;
 namespace todoApi.Data.Builders
 {
 
+    public class DetailsLike : Constraint
+    {
+        public override Dictionary<String, Object> Bind(Dapper.SqlBuilder builder)
+        {
+            var parameters = new Dictionary<String, Object>();
+
+            builder.Where("UPPER(Details) like @DetailsContains");
+            parameters.Add("DetailsContains", "%" + this.Value.ToString().ToUpper() + "%");
+
+            return parameters;
+        }
+    }
+
     public class TodoConstraints : Todo 
     {
-        public FirstCategoryConstraint FirstCategory { get { return new FirstCategoryConstraint(); } }
-
-        public class FirstCategoryConstraint : Constraint
-        {
-            public override Dictionary<String, Object> Bind(Dapper.SqlBuilder builder)
-            {
-                var parameters = new Dictionary<String, Object>();
-
-                builder.Where("category = @FirstCategory");
-                parameters.Add("FirstCategory", 1);
-
-                return parameters;
-            }
-        }
-
+        public DetailsLike DetailsLike { get { return new DetailsLike(); } }
     }
 
     public class TodoBuilder : BuilderBase<TodoConstraints>

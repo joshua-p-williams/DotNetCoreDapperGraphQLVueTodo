@@ -4,15 +4,8 @@ using Dapper;
 
 namespace todoApi.Data.Models
 {
-    public interface ICategory
-    {
-        int Id { get; set; }
-
-        String CategoryName { get; set; }
-    }
-
     [Table ("Categories")]
-    public class Category : ICategory
+    public class Category
     {
         [Key]
         public int Id { get; set; }

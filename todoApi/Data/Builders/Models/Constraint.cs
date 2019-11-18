@@ -49,6 +49,7 @@ namespace todoApi.Data.Builders
         public String Column { get; set; }
         public Object Value { get; set; }
         public TypeCode DataType { get; set; }
+        public Boolean Nullable { get; set; }
         public Comparison Comparison { get; set; }
 
 
@@ -57,10 +58,11 @@ namespace todoApi.Data.Builders
             this.Comparison = Comparison.Equals;
         }
 
-        public Constraint(String column, TypeCode dataType, Object value = null, Comparison comparison = Comparison.Equals)
+        public Constraint(String column, TypeCode dataType, Boolean nullable = false, Object value = null, Comparison comparison = Comparison.Equals)
         {
             this.Column = column;
             this.DataType = dataType;
+            this.Nullable = nullable;
             this.Value = value;
             this.Comparison = comparison;
         }

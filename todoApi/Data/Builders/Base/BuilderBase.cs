@@ -10,7 +10,9 @@ using Dapper;
 
 namespace todoApi.Data.Builders
 {
-    public abstract class BuilderBase<TConstraintsModel> : ConstrainableBuilder<TConstraintsModel>, IBuilder 
+    public abstract class BuilderBase<TConstraintsModel> 
+        : ConstrainableBuilder<TConstraintsModel>, IBuilder 
+        where TConstraintsModel : new()
     {
         protected SqlBuilder _builder = new SqlBuilder();
 

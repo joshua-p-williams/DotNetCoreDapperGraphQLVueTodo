@@ -9,16 +9,29 @@ using Newtonsoft.Json.Linq;
 
 namespace todoApi.Data.Builders
 {
-    public class ConstrainableBuilder<TConstraintsModel>
+    public class ConstrainableBuilder<TConstraintsModel> where TConstraintsModel : new()
     {
+
         public List<Constraint> GetConstrainables()
         {
             var output = new List<Constraint>();
 
             foreach(var prop in typeof(TConstraintsModel).GetProperties()) 
             {
-                var typeCode = System.Type.GetTypeCode(prop.PropertyType);
-                output.Add( new Constraint(prop.Name, typeCode));
+                Boolean nullable = false;
+                TypeCode typeCode = System.TypeCode.Empty;
+
+                if (prop.PropertyType.IsGenericType && prop.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                {
+                    nullable = true;
+                    typeCode = System.Type.GetTypeCode(prop.PropertyType.GetGenericArguments()[0]);
+                }
+                else
+                {
+                    typeCode = System.Type.GetTypeCode(prop.PropertyType);
+                }
+
+                output.Add(new Constraint(prop.Name, typeCode, nullable));
             }
 
             return output;         
@@ -29,13 +42,38 @@ namespace todoApi.Data.Builders
             var output = new List<Constraint>();
             var constrainables = this.GetConstrainables();
 
-            foreach(var key in constraints.Keys)
+            if (constraints.Count > 0)
             {
-                var validConstraint = constrainables.GetByColumn(key.ToString());
-                if (validConstraint != null)
+                var instance = new TConstraintsModel();
+
+                foreach(var key in constraints.Keys)
                 {
-                    var constraint = new Constraint(validConstraint.Column, validConstraint.DataType, constraints[key].ToString(), Comparison.Equals);
-                    output.Add(constraint);
+                    var validConstraint = constrainables.GetByColumn(key.ToString());
+                    if (validConstraint != null)
+                    {
+                        Constraint constraint = null;
+                        if (validConstraint.DataType == TypeCode.Object)
+                        {
+                            var customObj = instance.GetType().GetProperty(validConstraint.Column).GetValue(instance, null);
+                            var customObjType = customObj.GetType();
+                            var baseConstraintType = typeof(Constraint);
+                            var isConstraint = (customObjType.IsSubclassOf(baseConstraintType) || customObjType == baseConstraintType);
+                            if (isConstraint) 
+                            {
+                                constraint = (Constraint)customObj;
+                                constraint.DataType = TypeCode.Object;
+                                constraint.Value = constraints[key].ToString();
+                                constraint.Comparison = validConstraint.Comparison;
+                            }
+                        }
+
+                        if (constraint == null)
+                        {
+                            constraint = new Constraint(validConstraint.Column, validConstraint.DataType, validConstraint.Nullable, constraints[key].ToString(), Comparison.Equals);
+                        }
+
+                        output.Add(constraint);
+                    }
                 }
             }
 
